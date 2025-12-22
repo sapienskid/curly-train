@@ -1,6 +1,9 @@
 class MEW:
     def __init__(self, key_size=32):
-        pass
+        self.key_size = key_size
+        self.km1 = self._generate_key_matrix()
+        self.km2 = self._generate_key_matrix()
+        
     def _generate_key_matrix(self):
         pass
     def _get_move(self,byte_val):
