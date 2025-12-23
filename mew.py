@@ -18,7 +18,7 @@ class MEW:
         """Determine the direction and movement from a byte value.
         Directions:
         00: Down
-        11: Up
+        11: Up_
         01: Right
         10: Left
 
@@ -38,8 +38,18 @@ class MEW:
             col = (col - movement) % self.key_size
         return row, col
         
-    def _unmove(self):
-        pass
+    def _unmove(self, row, col, direction, movement):
+        """Reverse the move in the matrix based on direction and movement."""
+        if direction == 0b00:  # Was Down
+            row = (row - movement) % self.key_size
+        elif direction == 0b11:  # Was Up
+            row = (row + movement) % self.key_size
+        elif direction == 0b01:  # Was Right
+            col = (col - movement) % self.key_size
+        elif direction == 0b10:  # Was Left
+            col = (col + movement) % self.key_size
+        return row, col
+        
     def _pass_encrypt(self)
         pass
     def _pass_decrypt(self)
