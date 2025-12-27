@@ -57,11 +57,11 @@ class MEW:
         curr_row, curr_col = start_row, start_col
         for p_byte in plaintext_bytes:
             k1_val = self.km1[curr_row][curr_col]
-            t = p_byte*k1_val
+            t = p_byte^k1_val
             direction,movement = self._get_move(t)
             curr_row, curr_col = self._move(curr_row,curr_col, direction,movement)
             k2_val = self.km2[curr_row][curr_col]
-            c_byte = t^ k2_val
+            c_byte = t^k2_val
             cipher_bytes.append(c_byte)
         
         return cipher_bytes,curr_row, curr_col
@@ -90,6 +90,9 @@ class MEW:
         
         pass1_out, row, col = self._pass_encrypt(data, 0, 0)
 
+        if self.key_size>256:
+            raise ValueError("Key Size > 256 requires multi byte coordinate, not implemented yet")
+
         pass1_out.append(row)
         pass1_out.append(col)
         pass1_reversed = pass1_out[::-1]
@@ -102,7 +105,8 @@ class MEW:
         return bytes(pass2_out)
         
     def decrypt(self, ciphertext_bytes):
-        
+        if len(ciphertext_bytes)<2:
+            raise ValueError("Ciphertext too short")
         final_col = ciphertext_bytes[-1]
         final_row = ciphertext_bytes[-2]
         data = ciphertext_bytes[:-2]
