@@ -65,8 +65,22 @@ class MEW:
         
         return cipher_bytes,curr_r, curr_c
         
-    def _pass_decrypt(self)
-        pass
+    def _pass_decrypt(self, cipher_bytes, end_row, end_col):
+        plaintext_reversed = bytearray()
+        curr_row, curr_col = end_row, end_col
+
+        for c_byte in reversed(cipher_bytes):
+            k2_val = self.km2[curr_row][curr_col]
+            t = c_byte^k2_val
+            direction, movement = self._get_move(t)
+            prev_row, prev_col = self._unmove(curr_row, curr_col, direction, movement)
+            k1_val = self.km1[prev_row][prev_col]
+            p_byte = t^k1_val
+            plaintext_reversed.append(p_byte)
+            curr_row, curr_col = prev_row, prev_col
+        
+        return bytearray(reversed(plaintext_reversed))
+
     def encrypt(self):
         pass
     def decrypt(self):
