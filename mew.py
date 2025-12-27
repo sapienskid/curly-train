@@ -49,9 +49,22 @@ class MEW:
         elif direction == 0b10:  # Was Left
             col = (col + movement) % self.key_size
         return row, col
+
+
+    def _pass_encrypt(self, plaintext_bytes, start_row=0, start_col=0):
+        cipher_bytes = bytearray()
+        curr_row, curr_col = start_row, start_col
+        for p_byte in plaintext_bytes:
+            k1_val = self.km1[curr_row][curr_col]
+            t = p_byte*k1_val
+            direction,movement = self._get_move(t)
+            curr_row, curr_col = self._move(curr_row,curr_col, direction,movement)
+            k2_val = self.km2[curr_row][curr_col]
+            c_byte = t^ k2_val
+            cipher_bytes.append(c_byte)
         
-    def _pass_encrypt(self)
-        pass
+        return cipher_bytes,curr_r, curr_c
+        
     def _pass_decrypt(self)
         pass
     def encrypt(self):
