@@ -53,6 +53,7 @@ class MEW:
 
 
     def _pass_encrypt(self, plaintext_bytes, start_row=0, start_col=0):
+        """Encrypt a single pass over the plaintext bytes."""
         cipher_bytes = bytearray()
         curr_row, curr_col = start_row, start_col
         for p_byte in plaintext_bytes:
@@ -67,6 +68,7 @@ class MEW:
         return cipher_bytes,curr_row, curr_col
         
     def _pass_decrypt(self, cipher_bytes, end_row, end_col):
+        """Decrypt a single pass over the ciphertext bytes."""
         plaintext_reversed = bytearray()
         curr_row, curr_col = end_row, end_col
 
@@ -83,6 +85,7 @@ class MEW:
         return bytearray(reversed(plaintext_reversed))
 
     def encrypt(self, plaintext_str):
+        """Encrypt the given plaintext string or bytes."""
         if isinstance(plaintext_str, str):
             data = plaintext_str.encode('utf_8')
         else:
@@ -105,6 +108,7 @@ class MEW:
         return bytes(pass2_out)
         
     def decrypt(self, ciphertext_bytes):
+        """Decrypt the given ciphertext bytes."""
         if len(ciphertext_bytes)<2:
             raise ValueError("Ciphertext too short")
         final_col = ciphertext_bytes[-1]
