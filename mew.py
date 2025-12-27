@@ -1,3 +1,4 @@
+import secrets
 class MEW:
     def __init__(self, key_size=32):
         self.key_size = key_size
@@ -63,7 +64,7 @@ class MEW:
             c_byte = t^ k2_val
             cipher_bytes.append(c_byte)
         
-        return cipher_bytes,curr_r, curr_c
+        return cipher_bytes,curr_row, curr_col
         
     def _pass_decrypt(self, cipher_bytes, end_row, end_col):
         plaintext_reversed = bytearray()
@@ -81,7 +82,7 @@ class MEW:
         
         return bytearray(reversed(plaintext_reversed))
 
-    def encrypt(self):
+    def encrypt(self, plaintext_str):
         if isinstance(plaintext_str, str):
             data = plaintext_str.encode('utf_8')
         else:
@@ -96,7 +97,7 @@ class MEW:
         pass2_out, final_row, final_col = self._pass_encrypt(pass1_reversed, 0, 0)
 
         pass2_out.append(final_row)
-        pass2_out.append(final_c0l)
+        pass2_out.append(final_col)
 
         return bytes(pass2_out)
         
