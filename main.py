@@ -1,7 +1,10 @@
 from mew import MEW
 
 def print_matrix_preview(name, matrix):
-    pass
+    print(f"{name} Preview (Top-Left 4x4:)")
+    for r in range(min(4, len(matrix))):
+        print(" " + " ". join(f"{b:02x}" for b in matrix [r][:4]))
+    print(" ...")
 
 def main():
     print ("--- Matrix Encryption Walk")
