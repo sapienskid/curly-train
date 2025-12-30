@@ -51,3 +51,13 @@ for key_size in [8, 16, 32, 64, 128, 256]:
     # Time key generation (5000 iterations)
     # Record results
     pass
+
+#Memory Allocation
+
+# For each key size:
+# - Measure bytes required to store both key matrices
+
+for key_size in [8, 16, 32, 64, 128, 256]:
+    # Measure memory for km1 and km2
+    # Record in bytes
+    pass
