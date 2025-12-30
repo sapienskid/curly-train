@@ -6,12 +6,12 @@ class MEW:
         self.km2 = self._generate_key_matrix()
 
     def _generate_key_matrix(self):
-        """Generate a key_size x key_size matrix with random bytes (0-255)"""
+        """Generate a key_size x key_size matrix with random bytes (0-1023)"""
         matrix = []
         for i in range(self.key_size):
             row = []
             for j in range(self.key_size):
-                row.append(secrets.randbelow(256))
+                row.append(secrets.randbelow(1024))
             matrix.append(row)
         return matrix
 
@@ -93,8 +93,8 @@ class MEW:
         
         pass1_out, row, col = self._pass_encrypt(data, 0, 0)
 
-        if self.key_size>256:
-            raise ValueError("Key Size > 256 requires multi byte coordinate, not implemented yet")
+        if self.key_size>1024:
+            raise ValueError("Key Size > 1024 requires multi byte coordinate, not implemented yet")
 
         pass1_out.append(row)
         pass1_out.append(col)
